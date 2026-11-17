@@ -1,0 +1,288 @@
+{
+  "id": "septic-shock-resuscitation",
+  "title": "Sepsis and septic shock: initial resuscitation",
+  "category": "Shock & Sepsis",
+  "status": "draft",
+  "reviewed": null,
+  "sources": [
+    {
+      "title": "Surviving Sepsis Campaign: International Guidelines for Management of Sepsis and Septic Shock 2026 (SCCM/ESICM; Prescott H, et al. Crit Care Med, doi:10.1097/CCM.0000000000007075)",
+      "org": "SCCM/ESICM",
+      "year": 2026,
+      "url": "https://www.sccm.org/clinical-resources/guidelines/guidelines/surviving-sepsis-campaign-international-guidelines-for-management-of-sepsis-and-septic-shock-2026"
+    },
+    {
+      "title": "2024 Focused Update: Guidelines on Use of Corticosteroids in Sepsis, ARDS, and Community-Acquired Pneumonia (SCCM; Chaudhuri D, et al. Crit Care Med 2024;52(5):e219-e233, doi:10.1097/CCM.0000000000006172)",
+      "org": "SCCM",
+      "year": 2024,
+      "url": "https://sccm.org/clinical-resources/guidelines/guidelines/use-of-corticosteroids-in-sepsis-ards-cap"
+    },
+    {
+      "title": "ESICM guidelines on circulatory shock and hemodynamic monitoring 2025 (ESICM; Monnet X, et al. Intensive Care Med)",
+      "org": "ESICM",
+      "year": 2025,
+      "url": "https://www.esicm.org/esicm-guideline-circulatory-shock-haemodynamic-monitoring/"
+    }
+  ],
+  "start": "q_shock",
+  "nodes": {
+    "q_shock": {
+      "type": "question",
+      "text": "Sepsis suspected. Is there shock (hypotension or signs of hypoperfusion)?",
+      "answers": [
+        {
+          "label": "Yes, shock",
+          "next": "q_bundle"
+        },
+        {
+          "label": "No shock",
+          "next": "q_likely"
+        }
+      ]
+    },
+    "q_likely": {
+      "type": "question",
+      "text": "No shock. How likely is infection?",
+      "answers": [
+        {
+          "label": "Probable or definite",
+          "next": "e_probable"
+        },
+        {
+          "label": "Possible",
+          "next": "e_possible"
+        },
+        {
+          "label": "Low likelihood",
+          "next": "e_low"
+        }
+      ]
+    },
+    "q_hypoperf": {
+      "type": "question",
+      "text": "After the initial crystalloid boluses, is the patient still hypoperfused?",
+      "answers": [
+        {
+          "label": "Yes, still hypoperfused",
+          "next": "q_responsive"
+        },
+        {
+          "label": "No, perfusion improving",
+          "next": "q_source"
+        }
+      ]
+    },
+    "q_responsive": {
+      "type": "question",
+      "text": "Fluid responsive on a dynamic test (passive leg raise, pulse pressure variation, stroke volume change)?",
+      "answers": [
+        {
+          "label": "Yes, responsive",
+          "next": "e_morefluid"
+        },
+        {
+          "label": "No, or fluid overload risk",
+          "next": "q_map"
+        }
+      ]
+    },
+    "q_map": {
+      "type": "question",
+      "text": "Is MAP below target (65 mmHg; 60-65 if age 65 or older)?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "e_vasopressor"
+        },
+        {
+          "label": "No, MAP at target",
+          "next": "q_cardiac"
+        }
+      ]
+    },
+    "q_cardiac": {
+      "type": "question",
+      "text": "Echo: cardiac dysfunction, with hypoperfusion despite adequate volume and MAP?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "e_inotrope"
+        },
+        {
+          "label": "No",
+          "next": "q_source"
+        }
+      ]
+    },
+    "q_source": {
+      "type": "question",
+      "text": "Source needing control (abscess, obstruction, necrotic tissue, infected line or device)?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "e_source"
+        },
+        {
+          "label": "No / not found yet",
+          "next": "e_continue"
+        }
+      ]
+    },
+    "e_probable": {
+      "type": "end",
+      "title": "Probable sepsis, no shock",
+      "actions": [
+        "Give antimicrobials immediately, ideally within 1 hour of recognition.",
+        "Blood cultures (standard practice, not from the cited guideline); do not let them delay antimicrobials.",
+        "Measure lactate; repeat if raised.",
+        "Monitor closely for progression to shock."
+      ],
+      "cautions": [
+        "Empiric regimen per local antibiogram and protocol.",
+        "Beta-lactams: after a loading dose, give maintenance as prolonged infusion (SSC 2026).",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_possible": {
+      "type": "end",
+      "title": "Possible sepsis, no shock",
+      "actions": [
+        "Do a rapid, time-limited assessment for infection and other diagnoses.",
+        "If concern for infection persists, start antimicrobials within 3 hours of when sepsis was first suspected.",
+        "Measure lactate.",
+        "Reassess often; if shock develops, treat as septic shock (antimicrobials immediately)."
+      ],
+      "cautions": [
+        "Document the time sepsis was first suspected; the 3-hour window counts from then.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_low": {
+      "type": "end",
+      "title": "Low likelihood of infection, no shock",
+      "actions": [
+        "SSC 2026 suggests deferring antimicrobials while monitoring closely.",
+        "Look for and treat the alternative diagnosis.",
+        "Re-enter this pathway if infection becomes more likely or shock develops."
+      ],
+      "cautions": [
+        "Set a clear time for reassessment.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_morefluid": {
+      "type": "end",
+      "title": "Still hypoperfused and fluid responsive",
+      "actions": [
+        "Confirm antimicrobials were given within 1 hour of shock recognition.",
+        "Give a further crystalloid bolus; balanced crystalloid preferred over 0.9% saline.",
+        "Initial target: at least 30 mL/kg crystalloid in the first 3 hours, individualised (SSC 2026).",
+        "If BMI is over 30, base volume on adjusted or ideal body weight.",
+        "Reassess with capillary refill, serial lactate and a dynamic test after each bolus."
+      ],
+      "cautions": [
+        "Beyond 30 mL/kg, SSC 2026 allows either a liberal or restrictive approach: choose by patient factors.",
+        "Do not use starches; gelatin is not suggested.",
+        "Albumin is not routine; consider after large crystalloid volumes or in cirrhosis.",
+        "Start vasopressor early if MAP stays low; do not wait for fluids to finish.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_vasopressor": {
+      "type": "end",
+      "title": "Septic shock: start vasopressor",
+      "actions": [
+        "Start norepinephrine (first line).",
+        "Peripheral start is acceptable; do not delay for a central line.",
+        "Target MAP 65 mmHg, titrated within about 5 mmHg; 60-65 if age 65 or older.",
+        "Arterial line as soon as practical.",
+        "Confirm antimicrobials given within 1 hour of recognition.",
+        "IV corticosteroids are suggested in septic shock (dose per local protocol)."
+      ],
+      "cautions": [
+        "If norepinephrine is escalating: go to the pathway Vasopressor and inotrope escalation (vasopressin next).",
+        "Avoid high-dose short steroid courses (over 400 mg/day hydrocortisone-equivalent for under 3 days).",
+        "Peripheral vasopressor: no guideline limit on dose, duration or site; follow local policy and check the site often.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_inotrope": {
+      "type": "end",
+      "title": "Septic shock with cardiac dysfunction",
+      "actions": [
+        "Add dobutamine to norepinephrine, or use epinephrine alone (SSC 2026 suggestion).",
+        "Recheck volume status and perfusion markers after each change.",
+        "Consider cardiac output monitoring (ESICM 2025).",
+        "Consider IV corticosteroid per local protocol if not already started."
+      ],
+      "cautions": [
+        "Evidence is very low certainty.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_source": {
+      "type": "end",
+      "title": "Source control needed",
+      "actions": [
+        "Arrange source control early, ideally within 6 hours of diagnosis.",
+        "Possibly infected line or device: plan removal with the team per local protocol.",
+        "If MAP is below target (65 mmHg; 60-65 if age 65 or older), start norepinephrine first line; peripheral start is acceptable (SSC 2026). Dose per local infusion chart.",
+        "Continue resuscitation and antimicrobials during the procedure.",
+        "IV corticosteroids suggested if in septic shock (dose per local protocol)."
+      ],
+      "cautions": [
+        "Agree the approach (drainage vs surgery) with the surgical or IR team.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_continue": {
+      "type": "end",
+      "title": "Continue resuscitation and review",
+      "actions": [
+        "Confirm antimicrobials within 1 hour; review choice with cultures and local antibiogram.",
+        "If MAP is below target (65 mmHg; 60-65 if age 65 or older), start norepinephrine first line; peripheral start is acceptable (SSC 2026). Dose per local infusion chart.",
+        "Serial lactate and capillary refill to guide further fluid (not 'fluid until lactate normal').",
+        "Keep looking for a source that needs control.",
+        "If on vasopressors: IV corticosteroids suggested (dose per local protocol).",
+        "Once stable, plan active fluid removal to avoid overload."
+      ],
+      "cautions": [
+        "De-escalate antimicrobials once organism and sensitivities are known.",
+        "Routine empiric antifungal cover is not suggested without risk factors.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "q_bundle": {
+      "type": "question",
+      "text": "Shock. Antimicrobials given and initial crystalloid started?",
+      "answers": [
+        {
+          "label": "Yes, both",
+          "next": "q_hypoperf"
+        },
+        {
+          "label": "No / not yet",
+          "next": "e_bundle"
+        }
+      ]
+    },
+    "e_bundle": {
+      "type": "end",
+      "title": "Septic shock: first steps now",
+      "actions": [
+        "Give antimicrobials immediately if not already given, ideally within 1 hour of recognising shock (SSC 2026).",
+        "Blood cultures (standard practice, not from the cited guideline); do not let them delay antimicrobials.",
+        "Measure lactate; repeat it to guide resuscitation.",
+        "Start crystalloid: at least 30 mL/kg IV in the first 3 hours, individualised; balanced crystalloid preferred over 0.9% saline.",
+        "If BMI is over 30, base volume on adjusted or ideal body weight.",
+        "If MAP stays below target, start norepinephrine peripherally; do not wait for central access.",
+        "Then re-enter this pathway and answer 'Yes, both'."
+      ],
+      "cautions": [
+        "Reassess after each bolus; capillary refill time is a useful adjunct (SSC 2026).",
+        "Empiric regimen per local antibiogram and protocol.",
+        "Verify doses against local formulary/protocol."
+      ]
+    }
+  }
+}

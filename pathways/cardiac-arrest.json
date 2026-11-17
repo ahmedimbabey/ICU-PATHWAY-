@@ -1,0 +1,277 @@
+{
+  "id": "cardiac-arrest",
+  "title": "Adult cardiac arrest and post-ROSC care",
+  "category": "Cardiac Arrest & Arrhythmias",
+  "status": "draft",
+  "reviewed": null,
+  "sources": [
+    {
+      "title": "Part 9: Adult Advanced Life Support: 2025 American Heart Association Guidelines for CPR and ECC (AHA; Wigginton JG, et al. Circulation 2025;152(suppl 2):S538-S577, doi:10.1161/CIR.0000000000001376)",
+      "org": "AHA",
+      "year": 2025,
+      "url": "https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines/adult-advanced-life-support"
+    },
+    {
+      "title": "Adult Cardiac Arrest Algorithm (AHA 2025 Guidelines for CPR and ECC)",
+      "org": "AHA",
+      "year": 2025,
+      "url": "https://cpr.heart.org/-/media/CPR-Files/CPR-Guidelines-Files/2025-Algorithms/Algorithm-ACLS-CA-250527.pdf"
+    },
+    {
+      "title": "Part 11: Post-Cardiac Arrest Care: 2025 American Heart Association Guidelines for CPR and ECC (AHA; doi:10.1161/CIR.0000000000001375)",
+      "org": "AHA",
+      "year": 2025,
+      "url": "https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines/post-cardiac-arrest-care"
+    },
+    {
+      "title": "Adult Post-Cardiac Arrest Care Algorithm (AHA 2025 Guidelines for CPR and ECC)",
+      "org": "AHA",
+      "year": 2025,
+      "url": "https://cpr.heart.org/-/media/CPR-Files/CPR-Guidelines-Files/2025-Algorithms/PCAC-Algorithm-ACLS-PCAC-250527.pdf"
+    },
+    {
+      "title": "Cardiac Arrest in Pregnancy In-Hospital ACLS Algorithm (AHA 2025 Guidelines for CPR and ECC)",
+      "org": "AHA",
+      "year": 2025,
+      "url": "https://cpr.heart.org/-/media/CPR-Files/CPR-Guidelines-Files/2025-Algorithms/Algorithm-SC-ACLS-CA-in-Pregnancy-250620.pdf"
+    }
+  ],
+  "start": "q_rhythm",
+  "nodes": {
+    "q_rhythm": {
+      "type": "question",
+      "text": "Arrest called, CPR running, pads on. What does the monitor show at this rhythm check?",
+      "answers": [
+        {
+          "label": "VF / pulseless VT",
+          "next": "q_shocks"
+        },
+        {
+          "label": "Asystole / PEA",
+          "next": "e_nonshock"
+        },
+        {
+          "label": "ROSC (rhythm with a pulse)",
+          "next": "q_ste"
+        }
+      ]
+    },
+    "q_shocks": {
+      "type": "question",
+      "text": "Shockable rhythm. How many shocks already given?",
+      "answers": [
+        {
+          "label": "None yet",
+          "next": "e_first_shock"
+        },
+        {
+          "label": "1 shock given",
+          "next": "e_epi"
+        },
+        {
+          "label": "2 shocks given",
+          "next": "e_antiarrhythmic"
+        },
+        {
+          "label": "3 or more given, still VF/pVT",
+          "next": "e_refractory_vf"
+        }
+      ]
+    },
+    "q_ste": {
+      "type": "question",
+      "text": "ROSC. Post-ROSC 12-lead ECG: persistent ST elevation?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "e_cath_now"
+        },
+        {
+          "label": "No",
+          "next": "q_unstable"
+        }
+      ]
+    },
+    "q_unstable": {
+      "type": "question",
+      "text": "Cardiogenic shock or recurrent VT/VF after ROSC?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "e_cath_consider"
+        },
+        {
+          "label": "No",
+          "next": "q_commands"
+        }
+      ]
+    },
+    "q_commands": {
+      "type": "question",
+      "text": "Follows commands (off sedation and paralysis, if able to assess)?",
+      "answers": [
+        {
+          "label": "No / cannot assess",
+          "next": "e_comatose"
+        },
+        {
+          "label": "Yes",
+          "next": "e_awake"
+        }
+      ]
+    },
+    "e_first_shock": {
+      "type": "end",
+      "title": "VF/pVT: first shock",
+      "actions": [
+        "Shock once, then resume CPR immediately for 2 minutes.",
+        "Biphasic energy: per manufacturer (e.g. 120-200 J); if unknown, use the maximum. Monophasic: 360 J.",
+        "High-quality CPR: rate 100-120/min, depth at least 5 cm, full recoil, minimal pauses.",
+        "Get IV access (IO if IV fails). No drugs yet in this cycle.",
+        "Waveform capnography; consider an advanced airway.",
+        "Recheck rhythm after 2 minutes and re-enter this pathway."
+      ],
+      "cautions": [
+        "Single shocks, not stacked.",
+        "Change compressor every 2 minutes or sooner if tired.",
+        "If pregnant with fundal height at or above the umbilicus (AHA 2025 pregnancy algorithm): continuous left lateral uterine displacement; IV above the diaphragm; detach fetal monitors; early airway by the most experienced person (difficult airway common); if on IV magnesium, stop it and give calcium (dose per local protocol); call the maternal arrest team; aim for resuscitative delivery by 5 minutes if no ROSC, depending on local resources.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_refractory_vf": {
+      "type": "end",
+      "title": "Refractory VF/pVT (3 or more shocks)",
+      "actions": [
+        "Continue shocks with 2 minutes of CPR between rhythm checks.",
+        "Defibrillate at the same or higher energy than the first shock (AHA 2025: later shocks equivalent; higher may be considered).",
+        "Epinephrine 1 mg IV/IO every 3-5 minutes.",
+        "Amiodarone IV/IO (fixed dose, not weight-based): first dose 300 mg; ONE second dose of 150 mg; no further amiodarone boluses (the AHA 2025 algorithm lists only these two doses).",
+        "Or lidocaine IV/IO (weight-based): first dose 1-1.5 mg/kg; then 0.5-0.75 mg/kg; maximum total dose per local protocol.",
+        "Track antiarrhythmic doses already given: this screen is re-entered at every 2-minute check.",
+        "Actively treat causes: coronary occlusion, PE, hypo/hyperkalaemia, toxins, tension pneumothorax, tamponade.",
+        "Check CPR quality on capnography: aim for ETCO2 of at least 10, ideally 20 mmHg or more.",
+        "Senior decision on ECPR or transfer if locally available."
+      ],
+      "cautions": [
+        "Vector change or double sequential defibrillation after 3 or more shocks: usefulness not established (AHA 2025).",
+        "ECPR was not covered in the guideline pages reviewed: local programme decision.",
+        "If pregnant with fundal height at or above the umbilicus (AHA 2025 pregnancy algorithm): continuous left lateral uterine displacement; IV above the diaphragm; detach fetal monitors; early airway by the most experienced person (difficult airway common); if on IV magnesium, stop it and give calcium (dose per local protocol); call the maternal arrest team; aim for resuscitative delivery by 5 minutes if no ROSC, depending on local resources.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_nonshock": {
+      "type": "end",
+      "title": "Asystole / PEA",
+      "actions": [
+        "CPR for 2 minutes between rhythm checks.",
+        "Epinephrine 1 mg IV/IO as soon as feasible, then every 3-5 minutes.",
+        "IV first; IO if IV fails. Waveform capnography; consider an advanced airway.",
+        "Treat reversible causes: hypovolaemia, hypoxia, acidosis, hypo/hyperkalaemia, hypothermia, tension pneumothorax, tamponade, toxins, pulmonary or coronary thrombosis.",
+        "If the rhythm becomes shockable, go to the VF/pVT branch."
+      ],
+      "cautions": [
+        "POCUS may help find causes but must not lengthen pauses in compressions.",
+        "Calcium or bicarbonate only for a specific indication (e.g. hyperkalaemia, toxin) per local protocol, not routinely.",
+        "Termination in an intubated patient: ETCO2 below 10 mmHg after 20 minutes of ALS is one factor only; use no single ETCO2 cutoff if not intubated.",
+        "If pregnant with fundal height at or above the umbilicus (AHA 2025 pregnancy algorithm): continuous left lateral uterine displacement; IV above the diaphragm; detach fetal monitors; early airway by the most experienced person (difficult airway common); if on IV magnesium, stop it and give calcium (dose per local protocol); call the maternal arrest team; aim for resuscitative delivery by 5 minutes if no ROSC, depending on local resources.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_cath_now": {
+      "type": "end",
+      "title": "ROSC with ST elevation",
+      "actions": [
+        "Emergency coronary angiography, regardless of coma.",
+        "Oxygen: 100% until SpO2 or PaO2 is reliable, then SpO2 90-98%.",
+        "PaCO2 35-45 mmHg unless severe acidaemia.",
+        "MAP at least 65 mmHg with fluid and/or vasopressor.",
+        "If not following commands: start temperature control (see the comatose result)."
+      ],
+      "cautions": [
+        "If no cath lab on site: urgent transfer per local STEMI network.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_cath_consider": {
+      "type": "end",
+      "title": "ROSC with shock or electrical instability",
+      "actions": [
+        "Emergency coronary angiography is reasonable even without ST elevation.",
+        "Consider mechanical circulatory support with cardiology.",
+        "Oxygen to SpO2 90-98% once reliable; PaCO2 35-45 mmHg; MAP at least 65 mmHg.",
+        "If shock persists, go to the pathway: Cardiogenic shock."
+      ],
+      "cautions": [
+        "Treat recurrent VT/VF using the pathway Tachycardia with a pulse (adult), or this pathway if pulseless, while arranging angiography.",
+        "MAP targets differ by source: AHA 2025 post-arrest care says MAP at least 65 mmHg; the Cardiogenic shock pathway uses above 60-65 mmHg (ACC 2025 cardiogenic shock guidance). A MAP of 65 or more meets both; the ranges come from different guidelines, not a contradiction.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_comatose": {
+      "type": "end",
+      "title": "Post-ROSC, not following commands",
+      "actions": [
+        "Start deliberate temperature control, goal 32-37.5 C, as soon as possible, for at least 36 hours.",
+        "Avoid rewarming faster than 0.5 C per hour.",
+        "SpO2 90-98% once reliable; PaCO2 35-45 mmHg; MAP at least 65 mmHg.",
+        "Glucose: avoid below 70 mg/dL (3.9 mmol/L) and above 180 mg/dL (10 mmol/L).",
+        "EEG; treat clinical and non-convulsive seizures.",
+        "Consider CT (head, chest, abdomen, pelvis) and/or POCUS or echo to find the cause."
+      ],
+      "cautions": [
+        "No routine seizure prophylaxis.",
+        "Delay prognosis: multimodal assessment at least 72 hours after normothermia and stopping sedation.",
+        "Emergency angiography without ST elevation, shock or electrical instability is not better than a delayed or selective approach.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_awake": {
+      "type": "end",
+      "title": "Post-ROSC, following commands",
+      "actions": [
+        "SpO2 90-98%; PaCO2 35-45 mmHg; MAP at least 65 mmHg.",
+        "Glucose 70-180 mg/dL (3.9-10 mmol/L).",
+        "Find and treat the cause of arrest.",
+        "Coronary angiography before discharge if a cardiac cause is suspected."
+      ],
+      "cautions": [
+        "Recheck for deterioration; repeat this branch if mental state worsens.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_epi": {
+      "type": "end",
+      "title": "VF/pVT after 1 shock: second shock and epinephrine",
+      "actions": [
+        "Shock again, then CPR for 2 minutes.",
+        "Defibrillate at the same or higher energy than the first shock (AHA 2025: later shocks equivalent; higher may be considered).",
+        "Epinephrine 1 mg IV/IO during this cycle, then every 3-5 minutes.",
+        "Consider an advanced airway with waveform capnography.",
+        "Recheck rhythm after 2 minutes and re-enter this pathway."
+      ],
+      "cautions": [
+        "Vasopressin does not add benefit over epinephrine alone; high-dose epinephrine is not recommended.",
+        "If pregnant with fundal height at or above the umbilicus (AHA 2025 pregnancy algorithm): continuous left lateral uterine displacement; IV above the diaphragm; detach fetal monitors; early airway by the most experienced person (difficult airway common); if on IV magnesium, stop it and give calcium (dose per local protocol); call the maternal arrest team; aim for resuscitative delivery by 5 minutes if no ROSC, depending on local resources.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_antiarrhythmic": {
+      "type": "end",
+      "title": "VF/pVT after 2 shocks: third shock and antiarrhythmic",
+      "actions": [
+        "Shock again, then CPR for 2 minutes.",
+        "Defibrillate at the same or higher energy than the first shock (AHA 2025: later shocks equivalent; higher may be considered).",
+        "Amiodarone IV/IO (fixed dose, not weight-based): first dose 300 mg; ONE second dose of 150 mg later if VF/pVT persists; no further boluses.",
+        "Or lidocaine IV/IO (weight-based): first dose 1-1.5 mg/kg; then 0.5-0.75 mg/kg; maximum total dose per local protocol.",
+        "Continue epinephrine 1 mg every 3-5 minutes.",
+        "Treat reversible causes: hypovolaemia, hypoxia, acidosis, hypo/hyperkalaemia, hypothermia, tension pneumothorax, tamponade, toxins, pulmonary or coronary thrombosis.",
+        "Recheck rhythm every 2 minutes."
+      ],
+      "cautions": [
+        "Routine calcium and sodium bicarbonate are not recommended.",
+        "If pregnant with fundal height at or above the umbilicus (AHA 2025 pregnancy algorithm): continuous left lateral uterine displacement; IV above the diaphragm; detach fetal monitors; early airway by the most experienced person (difficult airway common); if on IV magnesium, stop it and give calcium (dose per local protocol); call the maternal arrest team; aim for resuscitative delivery by 5 minutes if no ROSC, depending on local resources.",
+        "Verify doses against local formulary/protocol."
+      ]
+    }
+  }
+}

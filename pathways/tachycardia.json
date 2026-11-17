@@ -1,0 +1,296 @@
+{
+  "id": "tachycardia",
+  "title": "Tachycardia with a pulse (adult)",
+  "category": "Cardiac Arrest & Arrhythmias",
+  "status": "draft",
+  "reviewed": null,
+  "sources": [
+    {
+      "title": "Part 9: Adult Advanced Life Support: 2025 American Heart Association Guidelines for CPR and ECC, tachyarrhythmia sections and Table 2 (AHA; Wigginton JG, et al. Circulation 2025;152(suppl 2):S538-S577, doi:10.1161/CIR.0000000000001376)",
+      "org": "AHA",
+      "year": 2025,
+      "url": "https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines/adult-advanced-life-support"
+    },
+    {
+      "title": "Adult Tachyarrhythmia With a Pulse Algorithm (AHA 2025 Guidelines for CPR and ECC)",
+      "org": "AHA",
+      "year": 2025,
+      "url": "https://cpr.heart.org/-/media/CPR-Files/CPR-Guidelines-Files/2025-Algorithms/Algorithm-ACLS-Tachycardia-250514.pdf"
+    },
+    {
+      "title": "Electrical Cardioversion Algorithm (AHA 2025 Guidelines for CPR and ECC)",
+      "org": "AHA",
+      "year": 2025,
+      "url": "https://cpr.heart.org/-/media/CPR-Files/CPR-Guidelines-Files/2025-Algorithms/Algorithm-ACLS-Electrical-Cardioversion-250514.pdf"
+    }
+  ],
+  "start": "q_sinus",
+  "nodes": {
+    "q_sinus": {
+      "type": "question",
+      "text": "Tachycardia with a pulse. Is it likely sinus tachycardia (P before every QRS, gradual onset, obvious driver)?",
+      "answers": [
+        {
+          "label": "Yes, sinus",
+          "next": "e_sinus"
+        },
+        {
+          "label": "No / unsure",
+          "next": "q_stable"
+        }
+      ]
+    },
+    "q_stable": {
+      "type": "question",
+      "text": "Is the arrhythmia (usually HR 150 or more) causing low BP, altered mentation, shock, ischaemic chest pain or acute heart failure?",
+      "answers": [
+        {
+          "label": "Yes, unstable",
+          "next": "q_unstable_type"
+        },
+        {
+          "label": "No, stable",
+          "next": "q_qrs"
+        }
+      ]
+    },
+    "q_unstable_type": {
+      "type": "question",
+      "text": "Unstable. Is it polymorphic VT (irregular, wide, changing QRS shape)?",
+      "answers": [
+        {
+          "label": "Yes, polymorphic",
+          "next": "e_poly"
+        },
+        {
+          "label": "No",
+          "next": "e_sync"
+        }
+      ]
+    },
+    "q_qrs": {
+      "type": "question",
+      "text": "Stable. QRS 0.12 s or wider?",
+      "answers": [
+        {
+          "label": "Narrow (under 0.12 s)",
+          "next": "q_narrow_reg"
+        },
+        {
+          "label": "Wide (0.12 s or more)",
+          "next": "q_wide_reg"
+        }
+      ]
+    },
+    "q_narrow_reg": {
+      "type": "question",
+      "text": "Narrow QRS. Regular or irregular?",
+      "answers": [
+        {
+          "label": "Regular",
+          "next": "e_svt"
+        },
+        {
+          "label": "Irregular (e.g. AF, flutter with variable block)",
+          "next": "q_hf"
+        }
+      ]
+    },
+    "q_hf": {
+      "type": "question",
+      "text": "AF/flutter. Which applies first?",
+      "answers": [
+        {
+          "label": "Reduced EF or decompensated heart failure",
+          "next": "e_af_hf"
+        },
+        {
+          "label": "Hypotensive or on vasopressors",
+          "next": "e_af_hypo"
+        },
+        {
+          "label": "Neither",
+          "next": "e_af_rate"
+        }
+      ]
+    },
+    "q_wide_reg": {
+      "type": "question",
+      "text": "Wide QRS. Regular and monomorphic?",
+      "answers": [
+        {
+          "label": "Regular, monomorphic",
+          "next": "e_wct"
+        },
+        {
+          "label": "Irregular",
+          "next": "q_irreg_wide"
+        }
+      ]
+    },
+    "q_irreg_wide": {
+      "type": "question",
+      "text": "Irregular wide QRS. Most likely?",
+      "answers": [
+        {
+          "label": "Pre-excited AF (WPW)",
+          "next": "e_preexc"
+        },
+        {
+          "label": "Polymorphic VT / torsades",
+          "next": "e_poly"
+        },
+        {
+          "label": "AF with known bundle branch block",
+          "next": "q_hf"
+        }
+      ]
+    },
+    "e_sinus": {
+      "type": "end",
+      "title": "Sinus tachycardia",
+      "actions": [
+        "Treat the driver: hypovolaemia, bleeding, sepsis, fever, pain, hypoxia, anaemia, PE, drug withdrawal.",
+        "Do not cardiovert.",
+        "Reassess the heart rate as the cause is treated."
+      ],
+      "cautions": [
+        "This node is standard practice, not from the cited guideline (the AHA algorithm assumes a non-sinus tachyarrhythmia).",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_sync": {
+      "type": "end",
+      "title": "Unstable: synchronised cardioversion",
+      "actions": [
+        "Synchronised cardioversion now; sedate whenever feasible.",
+        "Starting energy (AHA 2025 cardioversion algorithm): AF 200 J; atrial flutter 200 J; narrow-complex tachycardia 100 J; monomorphic VT 100 J.",
+        "If device energy guidance is unknown, use the maximum setting.",
+        "Regular narrow QRS: adenosine may be tried while preparing to cardiovert.",
+        "If it fails: raise the energy, add an antiarrhythmic, look for a cause, get expert help."
+      ],
+      "cautions": [
+        "Re-select sync mode before each shock; if sync fails and the patient is critical, switch to unsynchronised shocks.",
+        "Have suction, airway equipment, IV access and SpO2 monitoring at the bedside.",
+        "Energies are device-dependent: check your defibrillator's guidance.",
+        "If pre-excitation is possible (irregular wide QRS, pre-excited AF): no AV-nodal blockers and no IV amiodarone (harm, AHA 2025). If cardioversion fails, repeat at higher energy and get expert help.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_poly": {
+      "type": "end",
+      "title": "Polymorphic VT / torsades",
+      "actions": [
+        "Unstable or pulseless: immediate unsynchronised shock (defibrillation) at the maximum setting.",
+        "If pulseless: go to the pathway: Adult cardiac arrest and post-ROSC care.",
+        "Recurrent torsades with long QT: magnesium may be considered.",
+        "Stop QT-prolonging drugs; correct potassium and magnesium; treat bradycardia that triggers it."
+      ],
+      "cautions": [
+        "Magnesium dose is not given in the AHA text reviewed: use the local protocol.",
+        "Routine magnesium in polymorphic VT with a normal QT gives no benefit.",
+        "Urgent cardiology input.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_svt": {
+      "type": "end",
+      "title": "Stable regular narrow-QRS tachycardia",
+      "actions": [
+        "Vagal manoeuvre first; modified Valsalva techniques terminate more episodes than standard Valsalva (AHA 2025).",
+        "Adenosine 6 mg rapid IV push with saline flush; if needed, 12 mg.",
+        "If not terminated or it recurs: beta-blocker or calcium channel blocker.",
+        "Record the ECG during adenosine; get expert input."
+      ],
+      "cautions": [
+        "A lower adenosine dose (1 mg) may be enough via a central line or after heart transplant.",
+        "Carotid massage: avoid with carotid disease (stroke risk).",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_af_hf": {
+      "type": "end",
+      "title": "AF/flutter with reduced EF or decompensated HF",
+      "actions": [
+        "Amiodarone is reasonable for rate control in critically ill patients: 300 mg IV over 1 hour, then 10-50 mg/h over 24 hours (fixed doses, not weight-based).",
+        "Digoxin as an adjunct: 0.25 mg IV, repeated to a maximum of 1.5 mg in 24 hours.",
+        "Treat triggers: sepsis, hypovolaemia, electrolytes, ischaemia.",
+        "If it becomes unstable: synchronised cardioversion."
+      ],
+      "cautions": [
+        "Do not give diltiazem/verapamil or IV beta-blockers in decompensated HF with reduced LV function (harm).",
+        "Digoxin: caution in renal impairment.",
+        "Amiodarone may convert the rhythm: consider thromboembolic risk and anticoagulation per local protocol (standard practice, not from the cited guideline).",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_af_rate": {
+      "type": "end",
+      "title": "Stable AF/flutter: rate control",
+      "actions": [
+        "Beta-blocker or calcium channel blocker (AHA 2025 Table 2 doses):",
+        "Metoprolol 2.5-5 mg IV over 2 min, up to 3 doses.",
+        "Esmolol 500 mcg/kg IV over 1 min, then 50-300 mcg/kg/min (both weight-based).",
+        "Diltiazem bolus 0.25 mg/kg IV over 2 min (weight-based).",
+        "Then diltiazem infusion 5-10 mg/h (not weight-based).",
+        "Verapamil 0.075-0.15 mg/kg IV over 2 min; may repeat once after 30 min.",
+        "Treat triggers: sepsis, hypovolaemia, pain, electrolytes."
+      ],
+      "cautions": [
+        "Avoid calcium channel blockers in hypotension, heart failure, cardiomyopathy or ACS.",
+        "Never use AV-nodal blockers if pre-excitation is suspected.",
+        "Before any cardioversion: consider thromboembolic risk and anticoagulation per local protocol (standard practice, not from the cited guideline).",
+        "Check which agents are on the local formulary (e.g. diltiazem IV availability).",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_wct": {
+      "type": "end",
+      "title": "Stable regular monomorphic wide-QRS tachycardia",
+      "actions": [
+        "Get expert help early.",
+        "Adenosine may be considered only if regular and monomorphic.",
+        "Antiarrhythmic infusion: amiodarone 150 mg IV over 10 min, repeat if VT recurs, then 1 mg/min for the first 6 hours (fixed doses, not weight-based).",
+        "Or procainamide loading infusion 20-50 mg/min (not weight-based) until the arrhythmia stops, hypotension occurs, QRS widens by more than 50%, or a total of 17 mg/kg (weight-based maximum) has been given.",
+        "Then procainamide maintenance infusion 1-4 mg/min (not weight-based).",
+        "If it becomes unstable: synchronised cardioversion (100 J starting energy)."
+      ],
+      "cautions": [
+        "Do not give verapamil or diltiazem in wide-QRS tachycardia (harm).",
+        "Avoid procainamide with long QT or heart failure.",
+        "Procainamide availability locally: check formulary.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_preexc": {
+      "type": "end",
+      "title": "Pre-excited AF (suspected WPW)",
+      "actions": [
+        "Cardioversion is recommended (synchronised; AF starting energy 200 J).",
+        "Urgent cardiology / electrophysiology input."
+      ],
+      "cautions": [
+        "Do not give digoxin, diltiazem/verapamil, beta-blockers or IV amiodarone (harm, AHA 2025). Adenosine is also harmful in irregular wide-QRS tachycardia.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_af_hypo": {
+      "type": "end",
+      "title": "AF/flutter with hypotension or on vasopressors",
+      "actions": [
+        "If the arrhythmia is causing the hypotension: treat as unstable and cardiovert (go back and choose 'unstable').",
+        "Otherwise, amiodarone is reasonable for rate control in critically ill patients: 300 mg IV over 1 hour, then 10-50 mg/h over 24 hours (fixed doses, not weight-based; AHA 2025 Table 2).",
+        "Digoxin as an adjunct: 0.25 mg IV, repeated to a maximum of 1.5 mg in 24 hours.",
+        "Treat triggers: sepsis, hypovolaemia, electrolytes, ischaemia."
+      ],
+      "cautions": [
+        "Avoid diltiazem and verapamil in hypotension (AHA 2025 Table 2).",
+        "No AHA hypotension-specific caution for beta-blockers was found: senior decision.",
+        "No AV-nodal blockers or IV amiodarone if pre-excitation is suspected.",
+        "Digoxin: caution in renal impairment.",
+        "Before any cardioversion: consider thromboembolic risk and anticoagulation per local protocol (standard practice, not from the cited guideline).",
+        "Verify doses against local formulary/protocol."
+      ]
+    }
+  }
+}

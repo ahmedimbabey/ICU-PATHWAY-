@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>ICU Pathways</title>
+  <meta name="theme-color" content="#0b5cad">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="banner" class="banner" role="note">Decision support, not a substitute for clinical judgement.</div>
+  <header class="topbar"><a href="#/" class="brand" id="brand"></a><div id="offline-note" class="failed-note" role="status" hidden></div><div id="failed-note" class="failed-note" hidden></div></header>
+  <main id="app" tabindex="-1"></main>
+  <script type="module" src="src/ui.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        try { navigator.serviceWorker.register("sw.js").catch(function () {}); } catch (e) {}
+      });
+    }
+  </script>
+</body>
+</html>

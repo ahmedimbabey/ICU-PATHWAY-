@@ -1,0 +1,261 @@
+{
+  "id": "vasopressor-escalation",
+  "title": "Vasopressor and inotrope escalation",
+  "category": "Shock & Sepsis",
+  "status": "draft",
+  "reviewed": null,
+  "sources": [
+    {
+      "title": "Surviving Sepsis Campaign: International Guidelines for Management of Sepsis and Septic Shock 2026 (SCCM/ESICM; Prescott H, et al. Crit Care Med, doi:10.1097/CCM.0000000000007075)",
+      "org": "SCCM/ESICM",
+      "year": 2026,
+      "url": "https://www.sccm.org/clinical-resources/guidelines/guidelines/surviving-sepsis-campaign-international-guidelines-for-management-of-sepsis-and-septic-shock-2026"
+    },
+    {
+      "title": "2025 Concise Clinical Guidance: an ACC expert consensus statement on the evaluation and management of cardiogenic shock (ACC; Sinha SS, et al. J Am Coll Cardiol, doi:10.1016/j.jacc.2025.02.018)",
+      "org": "ACC",
+      "year": 2025,
+      "url": "https://www.acc.org/guidelines/guidelines/2025/03/17/19/42/cardiogenic-shock-concise-clinical-guidance"
+    },
+    {
+      "title": "2024 Focused Update: Guidelines on Use of Corticosteroids in Sepsis, ARDS, and Community-Acquired Pneumonia (SCCM; Chaudhuri D, et al. Crit Care Med 2024;52(5):e219-e233)",
+      "org": "SCCM",
+      "year": 2024,
+      "url": "https://sccm.org/clinical-resources/guidelines/guidelines/use-of-corticosteroids-in-sepsis-ards-cap"
+    },
+    {
+      "title": "ESICM guidelines on circulatory shock and hemodynamic monitoring 2025 (ESICM; Monnet X, et al. Intensive Care Med)",
+      "org": "ESICM",
+      "year": 2025,
+      "url": "https://www.esicm.org/esicm-guideline-circulatory-shock-haemodynamic-monitoring/"
+    }
+  ],
+  "start": "q_on_ne",
+  "nodes": {
+    "q_on_ne": {
+      "type": "question",
+      "text": "Shock with MAP below target. Already on norepinephrine?",
+      "answers": [
+        {
+          "label": "Yes, on norepinephrine",
+          "next": "q_checks"
+        },
+        {
+          "label": "No vasopressor yet",
+          "next": "e_start_ne"
+        }
+      ]
+    },
+    "q_checks": {
+      "type": "question",
+      "text": "Basics checked? (infusion running into the patient, arterial line reading true, volume status, bleeding, sedation effect)",
+      "answers": [
+        {
+          "label": "Yes, checked",
+          "next": "q_type"
+        },
+        {
+          "label": "Not yet",
+          "next": "e_troubleshoot"
+        }
+      ]
+    },
+    "q_type": {
+      "type": "question",
+      "text": "Main shock type?",
+      "answers": [
+        {
+          "label": "Septic / vasodilatory",
+          "next": "q_vaso"
+        },
+        {
+          "label": "Cardiogenic",
+          "next": "e_see_cs"
+        },
+        {
+          "label": "Unclear",
+          "next": "e_unclear"
+        }
+      ]
+    },
+    "q_vaso": {
+      "type": "question",
+      "text": "Norepinephrine dose rising. Vasopressin status?",
+      "answers": [
+        {
+          "label": "Not started yet",
+          "next": "e_add_vaso"
+        },
+        {
+          "label": "Already on vasopressin",
+          "next": "q_cardiac"
+        },
+        {
+          "label": "Vasopressin not available",
+          "next": "q_cardiac_novaso"
+        }
+      ]
+    },
+    "q_cardiac": {
+      "type": "question",
+      "text": "Echo: cardiac dysfunction with low output or persistent hypoperfusion?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "e_inotrope"
+        },
+        {
+          "label": "No",
+          "next": "q_steroid"
+        }
+      ]
+    },
+    "q_cardiac_novaso": {
+      "type": "question",
+      "text": "Vasopressin not available, so norepinephrine is the only vasopressor. Echo: cardiac dysfunction with low output or persistent hypoperfusion?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "e_inotrope"
+        },
+        {
+          "label": "No",
+          "next": "q_steroid"
+        }
+      ]
+    },
+    "q_steroid": {
+      "type": "question",
+      "text": "IV corticosteroid already started?",
+      "answers": [
+        {
+          "label": "No",
+          "next": "e_steroid"
+        },
+        {
+          "label": "Yes",
+          "next": "e_add_epi"
+        }
+      ]
+    },
+    "e_start_ne": {
+      "type": "end",
+      "title": "Start norepinephrine",
+      "actions": [
+        "Norepinephrine first line (septic shock: SSC 2026; cardiogenic shock: ACC 2025).",
+        "Dose and concentration per local infusion chart.",
+        "Peripheral start is acceptable in septic shock; do not delay for a central line.",
+        "Septic shock MAP target 65 mmHg (60-65 if age 65 or older).",
+        "Arterial line when on a vasopressor (ESICM 2025).",
+        "Cardiogenic shock: go to the pathway Cardiogenic shock."
+      ],
+      "cautions": [
+        "SSC 2026 gives no norepinephrine dose; use the local infusion chart.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_troubleshoot": {
+      "type": "end",
+      "title": "Fix the basics first",
+      "actions": [
+        "Check the infusion line, pump, concentration and connection.",
+        "Check arterial line zero, level and waveform; compare with cuff.",
+        "Test fluid responsiveness (passive leg raise, or end-expiratory occlusion if ventilated without spontaneous breaths).",
+        "Look for bleeding, tension pneumothorax, tamponade, and sedation-related hypotension.",
+        "Then return to this pathway."
+      ],
+      "cautions": [
+        "This troubleshooting list is standard practice, not from the cited guideline.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_see_cs": {
+      "type": "end",
+      "title": "Cardiogenic: use the cardiogenic shock pathway",
+      "actions": [
+        "Go to the pathway: Cardiogenic shock.",
+        "Get a 12-lead ECG and echo if not already done.",
+        "Call cardiology / regional shock centre early."
+      ],
+      "cautions": [
+        "In cardiogenic shock, more vasoactive agents were linked with worse outcomes in observational data (ACC 2025): use the lowest dose for the shortest time.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_unclear": {
+      "type": "end",
+      "title": "Rising pressor need, type unclear",
+      "actions": [
+        "Repeat echo (first-line for shock type, ESICM 2025).",
+        "Start cardiac output / stroke volume monitoring if not responding to initial therapy.",
+        "Re-examine for missed bleeding, obstruction, adrenal crisis or toxins.",
+        "Vasopressor meanwhile: continue norepinephrine titrated to the MAP target; if septic shock is possible and norepinephrine doses are escalating, SSC 2026 suggests adding vasopressin (dose per local infusion chart).",
+        "Senior review."
+      ],
+      "cautions": [
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_add_vaso": {
+      "type": "end",
+      "title": "Add vasopressin",
+      "actions": [
+        "SSC 2026 suggests adding vasopressin when norepinephrine doses are escalating.",
+        "Dose and concentration per local infusion chart.",
+        "Continue norepinephrine; titrate to the MAP target.",
+        "Consider IV corticosteroid per local protocol if not already started."
+      ],
+      "cautions": [
+        "No guideline threshold for when to add vasopressin: the norepinephrine dose that triggers it is a local decision.",
+        "SSC 2026 gives no vasopressin dose.",
+        "Terlipressin is suggested against (SSC 2026).",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_inotrope": {
+      "type": "end",
+      "title": "Add an inotrope",
+      "actions": [
+        "Septic shock with cardiac dysfunction and persistent hypoperfusion: add dobutamine to norepinephrine, or use epinephrine alone (SSC 2026).",
+        "Dose and concentration per local infusion chart.",
+        "Consider IV corticosteroid per local protocol if not already started.",
+        "Monitor cardiac output and perfusion markers after each change (ESICM 2025)."
+      ],
+      "cautions": [
+        "SSC 2026 evidence here is very low certainty and gives no doses.",
+        "Cardiogenic shock is different: use the Cardiogenic shock pathway.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_steroid": {
+      "type": "end",
+      "title": "Start IV corticosteroid",
+      "actions": [
+        "IV corticosteroid is suggested in septic shock (SSC 2026; SCCM 2024).",
+        "Use the low-dose regimen in the local protocol.",
+        "If MAP remains inadequate on norepinephrine plus vasopressin (or norepinephrine alone if vasopressin is unavailable): add epinephrine (SSC 2026)."
+      ],
+      "cautions": [
+        "Avoid high-dose short courses: over 400 mg/day hydrocortisone-equivalent for under 3 days (SCCM 2024).",
+        "No agent or dose is specified in the guideline sources reviewed: local protocol decision.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_add_epi": {
+      "type": "end",
+      "title": "Add epinephrine; treat as refractory",
+      "actions": [
+        "SSC 2026 suggests adding epinephrine if MAP stays inadequate on norepinephrine plus vasopressin.",
+        "Vasopressin unavailable: SSC 2026 allows adding epinephrine to norepinephrine alone; whether to do this is a local decision.",
+        "Dose and concentration per local infusion chart.",
+        "Consultant review: recheck diagnosis, source control, cardiac function and goals of care.",
+        "Cardiac output monitoring if not already in place (ESICM 2025)."
+      ],
+      "cautions": [
+        "Watch for tachyarrhythmia and myocardial ischaemia (standard practice, not from the cited guideline).",
+        "Angiotensin II: no SSC 2026 recommendation beyond norepinephrine being preferred. Blood purification is suggested against.",
+        "Verify doses against local formulary/protocol."
+      ]
+    }
+  }
+}

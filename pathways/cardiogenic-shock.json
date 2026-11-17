@@ -1,0 +1,338 @@
+{
+  "id": "cardiogenic-shock",
+  "title": "Cardiogenic shock",
+  "category": "Shock & Sepsis",
+  "status": "draft",
+  "reviewed": null,
+  "sources": [
+    {
+      "title": "2025 Concise Clinical Guidance: an ACC expert consensus statement on the evaluation and management of cardiogenic shock (ACC; Sinha SS, Morrow DA, Kapur NK, et al. J Am Coll Cardiol, doi:10.1016/j.jacc.2025.02.018)",
+      "org": "ACC",
+      "year": 2025,
+      "url": "https://www.acc.org/guidelines/guidelines/2025/03/17/19/42/cardiogenic-shock-concise-clinical-guidance"
+    },
+    {
+      "title": "ESICM guidelines on circulatory shock and hemodynamic monitoring 2025 (ESICM; Monnet X, et al. Intensive Care Med)",
+      "org": "ESICM",
+      "year": 2025,
+      "url": "https://www.esicm.org/esicm-guideline-circulatory-shock-haemodynamic-monitoring/"
+    },
+    {
+      "title": "SCAI SHOCK Stages Classification Expert Consensus Update: A Review and Incorporation of Validation Studies (SCAI; Naidu SS, et al.)",
+      "org": "SCAI",
+      "year": 2022,
+      "url": "https://scai.org/publications/clinical-documents/scai-shock-stages-classification-expert-consensus-update-review-and"
+    }
+  ],
+  "start": "q_cs",
+  "nodes": {
+    "q_cs": {
+      "type": "question",
+      "text": "Hypoperfusion with a likely cardiac cause (with or without low BP)?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "q_mech"
+        },
+        {
+          "label": "No / unsure",
+          "next": "e_not_cs"
+        }
+      ]
+    },
+    "q_mech": {
+      "type": "question",
+      "text": "Echo: mechanical cause? (tamponade, acute severe valve lesion, septal or papillary muscle rupture)",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "e_mech"
+        },
+        {
+          "label": "No",
+          "next": "q_rhythm"
+        }
+      ]
+    },
+    "q_rhythm": {
+      "type": "question",
+      "text": "Is an arrhythmia driving the shock?",
+      "answers": [
+        {
+          "label": "Bradycardia",
+          "next": "e_brady"
+        },
+        {
+          "label": "Tachyarrhythmia",
+          "next": "e_tachy"
+        },
+        {
+          "label": "No",
+          "next": "q_ecg"
+        }
+      ]
+    },
+    "q_ecg": {
+      "type": "question",
+      "text": "12-lead ECG: ST elevation or acute ischaemia?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "e_ami"
+        },
+        {
+          "label": "No",
+          "next": "q_bp"
+        }
+      ]
+    },
+    "q_bp": {
+      "type": "question",
+      "text": "Is the patient hypotensive (MAP below 60-65 mmHg)?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "q_response"
+        },
+        {
+          "label": "No, normotensive",
+          "next": "e_inodilator"
+        }
+      ]
+    },
+    "q_response": {
+      "type": "question",
+      "text": "Response to vasoactive therapy so far?",
+      "answers": [
+        {
+          "label": "Not started yet",
+          "next": "e_start_ne"
+        },
+        {
+          "label": "Improving",
+          "next": "q_congestion"
+        },
+        {
+          "label": "On norepinephrine, MAP still below target",
+          "next": "e_map_low"
+        },
+        {
+          "label": "On norepinephrine, MAP at target but still hypoperfused",
+          "next": "e_add_inotrope"
+        },
+        {
+          "label": "Still hypoperfused on norepinephrine plus inotrope",
+          "next": "e_refractory"
+        }
+      ]
+    },
+    "q_congestion": {
+      "type": "question",
+      "text": "Which congestion pattern dominates?",
+      "answers": [
+        {
+          "label": "Left-sided (pulmonary oedema, high wedge)",
+          "next": "e_diuretic"
+        },
+        {
+          "label": "Right-sided (dilated RV, high RAP, normal wedge)",
+          "next": "e_rv"
+        },
+        {
+          "label": "No significant congestion",
+          "next": "e_continue"
+        }
+      ]
+    },
+    "e_not_cs": {
+      "type": "end",
+      "title": "Cardiogenic cause not confirmed",
+      "actions": [
+        "Go to the pathway: Shock: initial recognition and type.",
+        "Echo and 12-lead ECG to clarify."
+      ],
+      "cautions": [
+        "Normotensive cardiogenic shock exists and carries high mortality (ACC 2025).",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_mech": {
+      "type": "end",
+      "title": "Mechanical cause of shock",
+      "actions": [
+        "Tamponade: urgent drainage.",
+        "Acute valve lesion or rupture: urgent cardiology and cardiac surgery review.",
+        "Call the regional shock centre early about transfer."
+      ],
+      "cautions": [
+        "Specific management of mechanical complications was not covered in the sources reviewed: these steps are standard practice, follow specialist advice.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_brady": {
+      "type": "end",
+      "title": "Bradycardia-driven shock",
+      "actions": [
+        "Go to the pathway: Bradycardia (adult, with a pulse).",
+        "12-lead ECG now if not already done (ACC 2025: every patient with suspected cardiogenic shock).",
+        "ST elevation or acute ischaemia: treat as shock with acute MI as well; early revascularisation, activate the cath lab or arrange urgent transfer to a PCI centre (ACC 2025).",
+        "A chronotrope (e.g. isoproterenol) may be trialled in bradycardia-induced shock (ACC 2025).",
+        "Prepare pacing."
+      ],
+      "cautions": [
+        "Check for drug causes and hyperkalaemia.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_tachy": {
+      "type": "end",
+      "title": "Tachyarrhythmia-driven shock",
+      "actions": [
+        "Go to the pathway: Tachycardia with a pulse (adult), unstable branch.",
+        "12-lead ECG now if not already done (ACC 2025: every patient with suspected cardiogenic shock).",
+        "ST elevation or acute ischaemia: treat as shock with acute MI as well; early revascularisation, activate the cath lab or arrange urgent transfer to a PCI centre (ACC 2025).",
+        "Synchronised cardioversion is the usual first step when a tachyarrhythmia causes shock."
+      ],
+      "cautions": [
+        "Cardioversion energies: see the pathway Tachycardia with a pulse (adult).",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_ami": {
+      "type": "end",
+      "title": "Shock with acute MI",
+      "actions": [
+        "Early revascularisation: activate cath lab or arrange urgent transfer to a PCI centre.",
+        "Early revascularisation is the only intervention with proven mortality benefit in MI shock (ACC 2025).",
+        "Support MAP above 60-65 mmHg with norepinephrine.",
+        "Contact the regional shock centre as soon as cardiogenic shock is confirmed (ACC 2025 advises early contact)."
+      ],
+      "cautions": [
+        "Routine temporary mechanical support for all patients is discouraged; a microaxial flow pump may be considered in selected STEMI shock with LV-dominant failure (specialist centre decision).",
+        "IABP did not improve mortality in MI shock (IABP-SHOCK II).",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_inodilator": {
+      "type": "end",
+      "title": "Normotensive cardiogenic shock",
+      "actions": [
+        "Consider an inodilator, especially if systemic vascular resistance is high.",
+        "Dobutamine 2-10 mcg/kg/min (weight-based; ACC 2025 range).",
+        "Or milrinone 0.125-0.5 mcg/kg/min (weight-based; ACC 2025 range).",
+        "Treat congestion with IV loop diuretic.",
+        "Serial lactate, urine output and echo; consider invasive haemodynamics early."
+      ],
+      "cautions": [
+        "Dobutamine and milrinone are inodilators (ACC 2025): watch for falling BP on the arterial line.",
+        "Milrinone: long half-life, renally cleared; care in renal impairment.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_start_ne": {
+      "type": "end",
+      "title": "Hypotensive cardiogenic shock: start support",
+      "actions": [
+        "Norepinephrine is a reasonable first choice; ACC 2025 range 0.05-1 mcg/kg/min (weight-based).",
+        "MAP target above 60-65 mmHg.",
+        "Arterial line (ESICM 2025).",
+        "Add an inotrope if hypoperfusion persists once MAP is adequate.",
+        "Stage the shock (SCAI SHOCK stages) and contact the shock team or regional centre."
+      ],
+      "cautions": [
+        "Do not use phenylephrine as the sole first-line agent (reflex bradycardia, lower cardiac output).",
+        "Use the lowest effective dose for the shortest time.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_refractory": {
+      "type": "end",
+      "title": "Refractory cardiogenic shock",
+      "actions": [
+        "Urgent shock-team discussion: cardiology, cardiac surgery, intensivist.",
+        "Discuss transfer to a Level 1 shock centre if refractory to initial drug therapy.",
+        "Consider invasive haemodynamics (PA catheter) to guide escalation.",
+        "Temporary mechanical support decision by the specialist centre.",
+        "Consider early palliative care input where appropriate."
+      ],
+      "cautions": [
+        "Ask early: any absolute contraindication to escalation (e.g. DNR, terminal illness)?",
+        "Assess whether the patient is stable enough to transfer.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_diuretic": {
+      "type": "end",
+      "title": "Left-sided congestion",
+      "actions": [
+        "IV loop diuretic; add a thiazide if response is poor (ACC 2025).",
+        "Refractory congestion: renal replacement therapy for ultrafiltration.",
+        "Respiratory support for pulmonary oedema as needed.",
+        "Continue to reassess perfusion; keep MAP above 60-65 mmHg."
+      ],
+      "cautions": [
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_rv": {
+      "type": "end",
+      "title": "RV-dominant shock",
+      "actions": [
+        "Look for the cause: RV infarction, pulmonary embolism, acute pulmonary hypertension, ventilation effects.",
+        "Urgent cardiology input.",
+        "Invasive haemodynamics can help define the pattern."
+      ],
+      "cautions": [
+        "The ACC 2025 guidance gives no specific RV-shock treatment steps: management needs specialist and local-protocol input.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_continue": {
+      "type": "end",
+      "title": "Improving: continue and reassess",
+      "actions": [
+        "Reassess often, especially in the first 24-72 hours.",
+        "Labs every 2-4 hours early on, then every 6-8 hours when stable (ACC 2025).",
+        "Daily echo or POCUS.",
+        "Wean vasoactive drugs to the lowest effective dose."
+      ],
+      "cautions": [
+        "Most patients change shock stage within 24 hours: be ready to escalate.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_add_inotrope": {
+      "type": "end",
+      "title": "Add an inotrope",
+      "actions": [
+        "MAP above 60-65 mmHg but still hypoperfused: add an inotrope.",
+        "Dobutamine 2-10 mcg/kg/min (weight-based; ACC 2025 range).",
+        "Or milrinone 0.125-0.5 mcg/kg/min (weight-based; ACC 2025 range).",
+        "Recheck lactate, urine output and echo after each change; consider invasive haemodynamics.",
+        "If still hypoperfused: re-enter and choose 'norepinephrine plus inotrope'."
+      ],
+      "cautions": [
+        "Dobutamine and milrinone are inodilators (ACC 2025): watch for falling BP on the arterial line.",
+        "Milrinone: long half-life, renally cleared; use with care in renal impairment.",
+        "Use the lowest effective dose for the shortest time.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_map_low": {
+      "type": "end",
+      "title": "On norepinephrine, MAP still low",
+      "actions": [
+        "Uptitrate norepinephrine within the ACC 2025 range, 0.05-1 mcg/kg/min (weight-based), towards MAP above 60-65 mmHg.",
+        "Urgent shock-team discussion: cardiology, cardiac surgery, intensivist.",
+        "Refractory to initial drug therapy: consult and consider transfer to a Level 1 shock centre, including discussion of mechanical circulatory support (ACC 2025).",
+        "Recheck for a mechanical cause, arrhythmia or ischaemia (repeat echo and ECG).",
+        "Do not start an inodilator alone while MAP is below target (standard practice, not from the cited guideline)."
+      ],
+      "cautions": [
+        "Dobutamine and milrinone are inodilators (ACC 2025) and can lower BP further.",
+        "Use the lowest effective dose for the shortest time.",
+        "Verify doses against local formulary/protocol."
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+[
+  "bradycardia.json",
+  "cardiac-arrest.json",
+  "cardiogenic-shock.json",
+  "septic-shock-resuscitation.json",
+  "shock-recognition.json",
+  "tachycardia.json",
+  "vasopressor-escalation.json"
+]

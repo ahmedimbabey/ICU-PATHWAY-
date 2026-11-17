@@ -1,0 +1,238 @@
+{
+  "id": "bradycardia",
+  "title": "Bradycardia (adult, with a pulse)",
+  "category": "Cardiac Arrest & Arrhythmias",
+  "status": "draft",
+  "reviewed": null,
+  "sources": [
+    {
+      "title": "Part 9: Adult Advanced Life Support: 2025 American Heart Association Guidelines for CPR and ECC, bradycardia section (AHA; Wigginton JG, et al. Circulation 2025;152(suppl 2):S538-S577, doi:10.1161/CIR.0000000000001376)",
+      "org": "AHA",
+      "year": 2025,
+      "url": "https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines/adult-advanced-life-support"
+    },
+    {
+      "title": "Adult Bradycardia With a Pulse Algorithm (AHA 2025 Guidelines for CPR and ECC)",
+      "org": "AHA",
+      "year": 2025,
+      "url": "https://cpr.heart.org/-/media/CPR-Files/CPR-Guidelines-Files/2025-Algorithms/Algorithm-ACLS-Bradycardia-250514.pdf"
+    }
+  ],
+  "start": "q_comp",
+  "nodes": {
+    "q_comp": {
+      "type": "question",
+      "text": "Bradycardia (usually HR below 50) with a pulse. Signs of compromise? (low BP, altered mentation, shock, ischaemic chest pain, acute heart failure)",
+      "answers": [
+        {
+          "label": "Yes, compromised",
+          "next": "q_access"
+        },
+        {
+          "label": "No, stable",
+          "next": "q_block"
+        }
+      ]
+    },
+    "q_access": {
+      "type": "question",
+      "text": "IV or IO access available now?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "q_atropine"
+        },
+        {
+          "label": "No",
+          "next": "e_pace_now"
+        }
+      ]
+    },
+    "q_atropine": {
+      "type": "question",
+      "text": "Atropine status?",
+      "answers": [
+        {
+          "label": "Not given yet",
+          "next": "e_atropine"
+        },
+        {
+          "label": "Given, not effective",
+          "next": "e_second_line"
+        },
+        {
+          "label": "Given, now stable",
+          "next": "e_stabilised"
+        }
+      ]
+    },
+    "q_block": {
+      "type": "question",
+      "text": "Stable. 12-lead ECG: high-degree AV block (Mobitz II or complete)?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "e_stable_block"
+        },
+        {
+          "label": "No",
+          "next": "q_cause"
+        }
+      ]
+    },
+    "q_cause": {
+      "type": "question",
+      "text": "Likely cause?",
+      "answers": [
+        {
+          "label": "Drug (beta-blocker, calcium channel blocker, digoxin)",
+          "next": "e_drug"
+        },
+        {
+          "label": "Hyperkalaemia",
+          "next": "e_hyperk"
+        },
+        {
+          "label": "Ischaemia / MI",
+          "next": "e_ischaemia"
+        },
+        {
+          "label": "Hypoxia",
+          "next": "e_hypoxia"
+        },
+        {
+          "label": "None found",
+          "next": "e_observe"
+        }
+      ]
+    },
+    "e_pace_now": {
+      "type": "end",
+      "title": "Unstable, no IV/IO access",
+      "actions": [
+        "Consider immediate transcutaneous pacing, especially with high-degree AV block (AHA 2025).",
+        "Get IV or IO access in parallel.",
+        "Oxygen and airway support as needed."
+      ],
+      "cautions": [
+        "Analgesia/sedation for pacing when feasible (standard practice, not from the cited guideline).",
+        "Confirm mechanical capture (a pulse), not just electrical spikes (standard practice, not from the cited guideline).",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_atropine": {
+      "type": "end",
+      "title": "Unstable: give atropine",
+      "actions": [
+        "Atropine 1 mg IV bolus; repeat every 3-5 minutes to a maximum of 3 mg.",
+        "Oxygen if needed; monitor, 12-lead ECG.",
+        "Look for and treat causes: ischaemia, drugs, hypoxia, electrolytes (e.g. hyperkalaemia).",
+        "If atropine fails: re-enter and choose 'Given, not effective'."
+      ],
+      "cautions": [
+        "Prepare pacing and an infusion while atropine is given.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_second_line": {
+      "type": "end",
+      "title": "Atropine ineffective",
+      "actions": [
+        "Transcutaneous pacing, or an infusion:",
+        "Dopamine infusion 5-20 mcg/kg/min (weight-based); titrate to response; taper slowly.",
+        "Or epinephrine infusion 2-10 mcg/min (not weight-based); titrate to response.",
+        "Expert consultation; arrange transvenous pacing.",
+        "Keep treating the cause."
+      ],
+      "cautions": [
+        "Confirm mechanical capture when pacing (standard practice, not from the cited guideline).",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_stabilised": {
+      "type": "end",
+      "title": "Stabilised after atropine",
+      "actions": [
+        "Find and treat the cause.",
+        "Continuous monitoring with pacing readily available.",
+        "Cardiology review if AV block or recurrence."
+      ],
+      "cautions": [
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_stable_block": {
+      "type": "end",
+      "title": "Stable high-degree AV block",
+      "actions": [
+        "Continuous monitoring; pacing equipment at the bedside.",
+        "Expert (cardiology) consultation.",
+        "Treat reversible causes: drugs, ischaemia, electrolytes."
+      ],
+      "cautions": [
+        "Can deteriorate suddenly: if compromise develops, restart this pathway on the compromised branch.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_drug": {
+      "type": "end",
+      "title": "Drug-related bradycardia",
+      "actions": [
+        "Stop the causative drug (standard practice, not from the cited guideline).",
+        "Contact poison centre / follow the local toxicology protocol for antidotes.",
+        "Monitor; pacing available if it worsens."
+      ],
+      "cautions": [
+        "Antidote choice and doses were not covered in the sources reviewed: local protocol.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_hyperk": {
+      "type": "end",
+      "title": "Hyperkalaemia-related bradycardia",
+      "actions": [
+        "Treat hyperkalaemia now per local protocol (membrane stabilisation, shift, removal).",
+        "Continuous ECG monitoring; repeat potassium."
+      ],
+      "cautions": [
+        "Hyperkalaemia treatment doses were not in the sources reviewed: use the local protocol.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_ischaemia": {
+      "type": "end",
+      "title": "Ischaemic bradycardia",
+      "actions": [
+        "Treat as acute coronary syndrome per local protocol; urgent cardiology.",
+        "Monitor; pacing available."
+      ],
+      "cautions": [
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_hypoxia": {
+      "type": "end",
+      "title": "Hypoxic bradycardia",
+      "actions": [
+        "Correct hypoxia: airway, oxygen, ventilation.",
+        "Check tube position and ventilator if intubated.",
+        "Reassess heart rate once oxygenation improves."
+      ],
+      "cautions": [
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_observe": {
+      "type": "end",
+      "title": "Stable, no clear cause",
+      "actions": [
+        "12-lead ECG; observe on monitor.",
+        "Review drugs and electrolytes.",
+        "Expert input if it persists or symptoms develop."
+      ],
+      "cautions": [
+        "Verify doses against local formulary/protocol."
+      ]
+    }
+  }
+}

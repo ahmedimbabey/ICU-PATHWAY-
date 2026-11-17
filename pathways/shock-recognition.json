@@ -1,0 +1,291 @@
+{
+  "id": "shock-recognition",
+  "title": "Shock: initial recognition and type",
+  "category": "Shock & Sepsis",
+  "status": "draft",
+  "reviewed": null,
+  "sources": [
+    {
+      "title": "ESICM guidelines on circulatory shock and hemodynamic monitoring 2025 (ESICM; Monnet X, Messina A, Greco M, et al. Intensive Care Med)",
+      "org": "ESICM",
+      "year": 2025,
+      "url": "https://www.esicm.org/esicm-guideline-circulatory-shock-haemodynamic-monitoring/"
+    },
+    {
+      "title": "Surviving Sepsis Campaign: International Guidelines for Management of Sepsis and Septic Shock 2026 (SCCM/ESICM; Prescott H, et al. Crit Care Med, doi:10.1097/CCM.0000000000007075)",
+      "org": "SCCM/ESICM",
+      "year": 2026,
+      "url": "https://www.sccm.org/clinical-resources/guidelines/guidelines/surviving-sepsis-campaign-international-guidelines-for-management-of-sepsis-and-septic-shock-2026"
+    },
+    {
+      "title": "2025 Concise Clinical Guidance: an ACC expert consensus statement on the evaluation and management of cardiogenic shock (ACC; Sinha SS, et al. J Am Coll Cardiol, doi:10.1016/j.jacc.2025.02.018)",
+      "org": "ACC",
+      "year": 2025,
+      "url": "https://www.acc.org/guidelines/guidelines/2025/03/17/19/42/cardiogenic-shock-concise-clinical-guidance"
+    }
+  ],
+  "start": "q_shock",
+  "nodes": {
+    "q_shock": {
+      "type": "question",
+      "text": "Features of shock? Low BP, or poor perfusion (slow capillary refill, mottling, low urine output, confusion, raised lactate). Low BP is not required.",
+      "answers": [
+        {
+          "label": "Yes, shock likely",
+          "next": "q_tension"
+        },
+        {
+          "label": "No / unclear",
+          "next": "e_noshock"
+        }
+      ]
+    },
+    "q_tension": {
+      "type": "question",
+      "text": "Tension pneumothorax suspected (unilateral absent air entry, rising airway pressure, sudden collapse on ventilator)?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "e_tension"
+        },
+        {
+          "label": "No",
+          "next": "q_anaph"
+        }
+      ]
+    },
+    "q_anaph": {
+      "type": "question",
+      "text": "Anaphylaxis suspected (recent drug/blood/contrast exposure plus rash, angioedema or bronchospasm)?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "e_anaph"
+        },
+        {
+          "label": "No",
+          "next": "q_bleed"
+        }
+      ]
+    },
+    "q_bleed": {
+      "type": "question",
+      "text": "Bleeding or major fluid loss the likely cause?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "q_trauma"
+        },
+        {
+          "label": "No",
+          "next": "q_echo"
+        }
+      ]
+    },
+    "q_trauma": {
+      "type": "question",
+      "text": "Which situation?",
+      "answers": [
+        {
+          "label": "Traumatic bleeding, no brain injury",
+          "next": "e_haem"
+        },
+        {
+          "label": "Trauma with brain injury (GCS 8 or less)",
+          "next": "e_haem_tbi"
+        },
+        {
+          "label": "Non-traumatic bleed or fluid loss",
+          "next": "e_hypovol"
+        }
+      ]
+    },
+    "q_echo": {
+      "type": "question",
+      "text": "Bedside echo / POCUS: main finding?",
+      "answers": [
+        {
+          "label": "Severely reduced LV or RV function",
+          "next": "e_cardiogenic"
+        },
+        {
+          "label": "Tamponade, or dilated RV with suspected PE",
+          "next": "e_obstructive"
+        },
+        {
+          "label": "Normal or hyperdynamic heart",
+          "next": "q_infect"
+        },
+        {
+          "label": "Echo not available yet",
+          "next": "e_noecho"
+        }
+      ]
+    },
+    "q_infect": {
+      "type": "question",
+      "text": "Infection the likely cause?",
+      "answers": [
+        {
+          "label": "Yes",
+          "next": "e_septic"
+        },
+        {
+          "label": "No / unclear",
+          "next": "e_undiff"
+        }
+      ]
+    },
+    "e_noshock": {
+      "type": "end",
+      "title": "Shock not established: reassess",
+      "actions": [
+        "Repeat perfusion checks at short intervals: capillary refill, skin temperature, mottling, urine output, mental state.",
+        "Measure lactate and repeat if raised.",
+        "Re-enter this pathway if perfusion worsens."
+      ],
+      "cautions": [
+        "Normal BP does not exclude shock; hypoperfusion can occur without hypotension.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_tension": {
+      "type": "end",
+      "title": "Suspected tension pneumothorax",
+      "actions": [
+        "Decompress immediately per local procedure, then place a chest drain (standard practice, not from the cited guideline).",
+        "Do not delay for imaging if the patient is peri-arrest.",
+        "If ventilated: check tube position and ventilator settings while preparing."
+      ],
+      "cautions": [
+        "Steps in this node are standard practice, not taken from the cited shock guidelines. Needs local-protocol confirmation.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_anaph": {
+      "type": "end",
+      "title": "Suspected anaphylactic shock",
+      "actions": [
+        "Switch to the local anaphylaxis protocol now.",
+        "Stop the suspected trigger (infusion, blood, drug).",
+        "Secure airway early if there is airway swelling."
+      ],
+      "cautions": [
+        "No anaphylaxis guideline was reviewed for this draft, so no doses are given here. Use the local protocol.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_haem": {
+      "type": "end",
+      "title": "Haemorrhagic shock (trauma, no brain injury)",
+      "actions": [
+        "Stop the bleeding: surgery, interventional radiology or local haemostasis; call the surgical team.",
+        "Activate the local massive transfusion protocol if needed.",
+        "Until major bleeding is controlled, ESICM 2025 suggests an initial systolic target of 80-90 mmHg (MAP 50-60).",
+        "Arterial line when practical."
+      ],
+      "cautions": [
+        "Lower BP target applies only while bleeding is uncontrolled and only without brain injury.",
+        "Blood product ratios and tranexamic acid: follow local trauma protocol (not covered by sources reviewed).",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_haem_tbi": {
+      "type": "end",
+      "title": "Shock with traumatic brain injury",
+      "actions": [
+        "Stop bleeding sources; fluid and blood product choice per local trauma protocol.",
+        "ESICM 2025: aim for an initial MAP of 80 mmHg or more when GCS is 8 or less.",
+        "Arterial line when practical."
+      ],
+      "cautions": [
+        "Involve neurosurgery early (standard practice, not from the cited guideline).",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_hypovol": {
+      "type": "end",
+      "title": "Hypovolaemic shock (non-traumatic)",
+      "actions": [
+        "Treat the source: GI bleed (endoscopy, transfusion per local protocol) or ongoing losses (GI, renal, burns).",
+        "Give fluid in measured boluses and reassess after each one.",
+        "Use a dynamic test (passive leg raise, or end-expiratory occlusion if ventilated and not breathing spontaneously) before giving more.",
+        "Arterial line if not improving or vasopressor needed."
+      ],
+      "cautions": [
+        "Echo early if response is poor: a second shock type may coexist.",
+        "Source-specific steps here are standard practice, not from the cited guideline.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_cardiogenic": {
+      "type": "end",
+      "title": "Likely cardiogenic shock",
+      "actions": [
+        "Go to the pathway: Cardiogenic shock.",
+        "12-lead ECG now; look for ST elevation or acute ischaemia.",
+        "Arterial line; avoid large fluid boluses until filling status is clear."
+      ],
+      "cautions": [
+        "Sepsis with cardiac dysfunction can look similar: check for infection.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_obstructive": {
+      "type": "end",
+      "title": "Likely obstructive shock",
+      "actions": [
+        "Tamponade: urgent drainage; call cardiology/cardiac surgery.",
+        "Suspected massive PE: start the local PE / reperfusion pathway and call the senior.",
+        "Support BP while the cause is treated; reassess the RV on echo after each intervention."
+      ],
+      "cautions": [
+        "No PE or tamponade guideline was reviewed for this draft: reperfusion choice and drug doses must come from the local protocol.",
+        "Cause-specific steps here are standard practice, not from the cited guideline.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_septic": {
+      "type": "end",
+      "title": "Likely septic shock",
+      "actions": [
+        "Go to the pathway: Sepsis and septic shock: initial resuscitation.",
+        "Antimicrobials immediately, ideally within 1 hour of recognition (SSC 2026).",
+        "Measure lactate; start crystalloid resuscitation."
+      ],
+      "cautions": [
+        "Septic shock can include myocardial dysfunction: repeat echo if not improving.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_noecho": {
+      "type": "end",
+      "title": "Shock type not yet known",
+      "actions": [
+        "Treat the most likely cause while arranging echo as soon as possible (first-line test for shock type, ESICM 2025).",
+        "Use a dynamic fluid-responsiveness test before repeat fluid boluses.",
+        "Arterial line if not responding to initial therapy or a vasopressor is needed.",
+        "Serial perfusion checks: capillary refill, lactate, urine output."
+      ],
+      "cautions": [
+        "Mixed shock is common; reassess the type if the response is poor.",
+        "Verify doses against local formulary/protocol."
+      ]
+    },
+    "e_undiff": {
+      "type": "end",
+      "title": "Distributive or unclear shock",
+      "actions": [
+        "Look for other causes: adrenal crisis, drugs or toxins, spinal cord injury, liver failure, recent anaesthesia.",
+        "If not responding to initial therapy: monitor cardiac output / stroke volume (ESICM 2025) and repeat echo.",
+        "Arterial line; measure CVP if a central line is in place.",
+        "Senior review of the working diagnosis."
+      ],
+      "cautions": [
+        "Keep infection on the list until excluded; if septic shock is possible, do not delay antimicrobials (SSC 2026).",
+        "The list of other causes is standard practice, not from the cited guideline.",
+        "Verify doses against local formulary/protocol."
+      ]
+    }
+  }
+}
